@@ -12,7 +12,7 @@ Welcome to the Java System Design Patterns repository! This repository contains 
 2. [Introduction to Design Patterns](#design-patterns-introduction)
    - [What are Design Patterns?](#what-are-design-patterns)	
    - [Advantages of Design Patterns](#advantages-of-design-pattern)
-   - [Consequences of Unfamiliarity with Design Patterns](#consequences-of-unfamilarity-with-the-design-patterns)
+   - [Consequences of Unfamiliarity with Design Patterns](#consequences-of-unfamiliarity-with-design-patterns)
    - [Classification of Design Patterns](#classification-of-design-pattern)
      
 3. [Creational Patterns](#creational-patterns)
