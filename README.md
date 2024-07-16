@@ -10,7 +10,11 @@ Welcome to the Java System Design Patterns repository! This repository contains 
    - [How to Use this Repository](#how-to-use-this-repository)
 
 2. [Introduction to design patterns](#design-patterns-introduction)
-
+   - [What are design patterns?](#what-are-design-patterns)	
+   - [Advantages of design patterns](#advantages-of-design-pattern)
+   - [Consequences of unfamiliarity with the design patterns](#consequences-of-unfamilarity-with-the-design-patterns)
+   - [Classification of design patterns](#classification-of-design-pattern)
+     
 3. [Creational Patterns](#creational-patterns)
    - [Singleton Pattern](#singleton-pattern)
    - [Factory Method Pattern](#factory-method-pattern)
