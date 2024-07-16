@@ -5,7 +5,7 @@ Welcome to the Java System Design Patterns repository! This repository contains 
 
 ## Table of Contents
 
-1. [Introduction](#repo-introduction)
+1. [Introduction](#introduction)
    - [About this Repository](#about-this-repository)
    - [How to Use this Repository](#how-to-use-this-repository)
 
