@@ -156,6 +156,8 @@ The Singleton Pattern is one of the simplest and most commonly used design patte
 
 The Singleton Pattern restricts the instantiation of a class to a single instance. This is useful when exactly one object is needed to coordinate actions across the system. The pattern involves a single class that is responsible for creating an object while making sure that only one object gets created.
 
+![Singleton Pattern](https://github.com/user-attachments/assets/02ab6b55-882f-440f-a6c6-06d07d9e970a)
+
 #### Problem it Solves
 
 In certain scenarios, it is important to have exactly one instance of a class. Examples include:
