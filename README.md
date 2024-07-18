@@ -370,7 +370,159 @@ public class Main {
 
 In this example, the `DatabaseConnectionManager` class ensures that there is only one instance managing the database connections. This singleton instance can be used throughout the application to get the database connection, ensuring efficient use of resources and consistent behavior.
 
+<hr>
 
+
+## Factory Method Pattern
+
+### Introduction
+
+The Factory Method Pattern is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created. This pattern enables a class to defer instantiation to its subclasses, promoting loose coupling and scalability.
+
+### Problem It Solves
+
+The Factory Method Pattern solves the problem of creating objects without specifying the exact class of the object that will be created. It addresses the following issues:
+
+1.  **Decoupling**: Reduces the dependency of a class on concrete classes by relying on interfaces or abstract classes.
+2.  **Extensibility**: Makes it easier to introduce new classes with minimal changes to existing code.
+3.  **Simplified Object Creation**: Encapsulates the object creation logic in one place, making the code easier to manage and understand.
+
+### How to Implement It
+
+To implement the Factory Method Pattern, follow these steps:
+
+1.  **Define a Product Interface or Abstract Class**: This defines the type of object that the factory method will create.
+2.  **Implement Concrete Products**: These are the actual objects that will be created by the factory method.
+3.  **Create a Creator Abstract Class or Interface**: This declares the factory method, which returns an object of type Product.
+4.  **Implement Concrete Creators**: These override the factory method to return an instance of a concrete product.
+
+### Detailed Java Example
+
+Let's consider a real-life example where we have a `Notification` system. Different types of notifications (Email, SMS, Push) need to be created, but the client code should not be dependent on the concrete classes.
+
+#### Product Interface
+
+```java
+// Notification.java
+
+public interface Notification {
+    void notifyUser();
+}
+```
+
+#### Concrete Products
+
+```java
+// EmailNotification.java
+
+public class EmailNotification implements Notification {
+    @Override
+    public void notifyUser() {
+        System.out.println("Sending an email notification");
+    }
+}
+```
+```java
+// SMSNotification.java
+
+public class SMSNotification implements Notification {
+    @Override
+    public void notifyUser() {
+        System.out.println("Sending an SMS notification");
+    }
+}
+```
+
+```java
+// PushNotification.java
+
+public class PushNotification implements Notification {
+    @Override
+    public void notifyUser() {
+        System.out.println("Sending a push notification");
+    }
+}
+```
+
+#### Creator Abstract Class
+
+```java
+// NotificationFactory.java
+
+public abstract class NotificationFactory {
+    public abstract Notification createNotification();
+
+    public void notifyUser() {
+        Notification notification = createNotification();
+        notification.notifyUser();
+    }
+}
+```
+
+#### Concrete Creators
+
+```java
+// EmailNotificationFactory.java
+
+public class EmailNotificationFactory extends NotificationFactory {
+    @Override
+    public Notification createNotification() {
+        return new EmailNotification();
+    }
+}
+```
+``` java
+// SMSNotificationFactory.java
+
+public class SMSNotificationFactory extends NotificationFactory {
+    @Override
+    public Notification createNotification() {
+        return new SMSNotification();
+    }
+}
+```
+```java
+// PushNotificationFactory.java
+
+public class PushNotificationFactory extends NotificationFactory {
+    @Override
+    public Notification createNotification() {
+        return new PushNotification();
+    }
+}
+```
+
+#### Client Code
+
+```java
+// Main.java
+
+public class Main {
+    public static void main(String[] args) {
+        NotificationFactory emailFactory = new EmailNotificationFactory();
+        emailFactory.notifyUser();
+
+        NotificationFactory smsFactory = new SMSNotificationFactory();
+        smsFactory.notifyUser();
+
+        NotificationFactory pushFactory = new PushNotificationFactory();
+        pushFactory.notifyUser();
+    }
+}
+```
+
+### Pros
+
+1.  **Loose Coupling**: The client code is decoupled from the concrete classes, making it easier to manage and extend.
+2.  **Single Responsibility Principle**: The creation logic is encapsulated in the factory classes, adhering to the Single Responsibility Principle.
+3.  **Open/Closed Principle**: New product types can be introduced without modifying existing code, following the Open/Closed Principle.
+
+### Cons
+
+1.  **Complexity**: Introduces additional classes and interfaces, which can make the code more complex.
+2.  **Overhead**: If the number of concrete products is small, the pattern might introduce unnecessary overhead.
+
+The Factory Method Pattern is a powerful design pattern that promotes flexibility and scalability in the creation of objects. By abstracting the instantiation process, it allows for easy extension and modification, making the codebase more maintainable and adaptable to change.
 
 <hr>
 ## Contributing
