@@ -156,7 +156,8 @@ The Singleton Pattern is one of the simplest and most commonly used design patte
 
 The Singleton Pattern restricts the instantiation of a class to a single instance. This is useful when exactly one object is needed to coordinate actions across the system. The pattern involves a single class that is responsible for creating an object while making sure that only one object gets created.
 
-![Singleton Pattern](https://github.com/user-attachments/assets/02ab6b55-882f-440f-a6c6-06d07d9e970a)
+![Singleton Pattern](https://github.com/user-attachments/assets/c847232a-1f1e-4dcd-a20c-c8382f092aeb)
+
 
 #### Problem it Solves
 
@@ -388,7 +389,7 @@ The Factory Method Pattern solves the problem of creating objects without specif
 3.  **Simplified Object Creation**: Encapsulates the object creation logic in one place, making the code easier to manage and understand.
 
 ### How to Implement It
-![image](https://github.com/user-attachments/assets/a5c7e7af-b6af-4b16-a0b4-f9225920a546)
+![Factory Method Pattern](https://github.com/user-attachments/assets/a5c7e7af-b6af-4b16-a0b4-f9225920a546)
 
 To implement the Factory Method Pattern, follow these steps:
 
