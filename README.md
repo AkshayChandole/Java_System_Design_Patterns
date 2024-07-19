@@ -527,6 +527,198 @@ public class Main {
 The Factory Method Pattern is a powerful design pattern that promotes flexibility and scalability in the creation of objects. By abstracting the instantiation process, it allows for easy extension and modification, making the codebase more maintainable and adaptable to change.
 
 <hr>
+
+
+## Abstract Factory Pattern
+
+### Introduction
+
+The Abstract Factory Pattern is a creational design pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes. It is useful when a system needs to be independent of how its objects are created, composed, and represented.
+
+### Problem It Solves
+
+The Abstract Factory Pattern addresses several key issues:
+
+1.  **Family of Products**: It is useful when there are multiple families of products that need to be created together.
+2.  **Encapsulation of Object Creation**: It encapsulates the creation logic for a set of related objects, making the system more modular.
+3.  **Interchangeability**: It allows the interchange of product families without modifying the client code.
+
+### How to Implement It
+
+To implement the Abstract Factory Pattern, follow these steps:
+
+1.  **Define Abstract Product Interfaces**: These interfaces declare the operations that all concrete products must implement.
+2.  **Create Concrete Product Classes**: These are specific implementations of the abstract products.
+3.  **Define Abstract Factory Interface**: This interface declares methods for creating each type of product.
+4.  **Implement Concrete Factory Classes**: These factories create instances of the concrete product classes.
+
+### Detailed Java Example
+
+Let's consider a real-life example where we have a GUI toolkit that should work with multiple operating systems (Windows and Mac). The GUI toolkit needs to create different types of buttons and checkboxes depending on the operating system.
+
+#### Abstract Product Interfaces
+
+```java
+// Button.java
+
+public interface Button {
+    void paint();
+}
+```
+
+```java
+// Checkbox.java
+
+public interface Checkbox {
+    void paint();
+}
+```
+
+#### Concrete Product Classes
+
+``` java
+// WindowsButton.java
+
+public class WindowsButton implements Button {
+    @Override
+    public void paint() {
+        System.out.println("Rendering a button in Windows style");
+    }
+}
+```
+
+```java
+// MacButton.java
+
+public class MacButton implements Button {
+    @Override
+    public void paint() {
+        System.out.println("Rendering a button in Mac style");
+    }
+}
+```
+
+```java
+// WindowsCheckbox.java
+
+public class WindowsCheckbox implements Checkbox {
+    @Override
+    public void paint() {
+        System.out.println("Rendering a checkbox in Windows style");
+    }
+}
+```
+
+```java
+// MacCheckbox.java
+
+public class MacCheckbox implements Checkbox {
+    @Override
+    public void paint() {
+        System.out.println("Rendering a checkbox in Mac style");
+    }
+}
+```
+
+#### Abstract Factory Interface
+
+```java
+// GUIFactory.java
+
+public interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+```
+
+#### Concrete Factory Classes
+
+```java
+// WindowsFactory.java
+
+public class WindowsFactory implements GUIFactory {
+    @Override
+    public Button createButton() {
+        return new WindowsButton();
+    }
+
+    @Override
+    public Checkbox createCheckbox() {
+        return new WindowsCheckbox();
+    }
+}
+```
+
+```java
+// MacFactory.java
+
+public class MacFactory implements GUIFactory {
+    @Override
+    public Button createButton() {
+        return new MacButton();
+    }
+
+    @Override
+    public Checkbox createCheckbox() {
+        return new MacCheckbox();
+    }
+}
+```
+
+#### Client Code
+
+```java
+// Application.java
+
+public class Application {
+    private Button button;
+    private Checkbox checkbox;
+
+    public Application(GUIFactory factory) {
+        button = factory.createButton();
+        checkbox = factory.createCheckbox();
+    }
+
+    public void paint() {
+        button.paint();
+        checkbox.paint();
+    }
+}
+```
+
+```java
+// Main.java
+
+public class Main {
+    public static void main(String[] args) {
+        GUIFactory factory;
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("win")) {
+            factory = new WindowsFactory();
+        } else {
+            factory = new MacFactory();
+        }
+        Application app = new Application(factory);
+        app.paint();
+    }
+}
+```
+
+### Pros
+
+1.  **Encapsulation**: Encapsulates the creation of related objects, promoting modularity and separation of concerns.
+2.  **Interchangeability**: Allows easy switching between different families of products.
+3.  **Consistency**: Ensures that products created by one factory are compatible with each other.
+4.  **Single Responsibility Principle**: Separates the creation of objects from their usage, adhering to the Single Responsibility Principle.
+
+### Cons
+
+1.  **Complexity**: Increases the complexity of the system by introducing additional interfaces and classes.
+2.  **Maintenance Overhead**: Adding new product families requires changes to the abstract factory interface and all concrete factories.
+
+The Abstract Factory Pattern is a powerful design pattern that promotes flexibility and scalability in the creation of related objects. By abstracting the instantiation process, it allows for easy extension and modification, making the codebase more maintainable and adaptable to change.
+
+<hr>
 ## Contributing
 
 ### How to Contribute
