@@ -545,6 +545,9 @@ The Abstract Factory Pattern addresses several key issues:
 
 ### How to Implement It
 
+![abstract-factory-uml](https://github.com/user-attachments/assets/22827924-0600-4970-bf90-2bf6f4908468)
+
+
 To implement the Abstract Factory Pattern, follow these steps:
 
 1.  **Define Abstract Product Interfaces**: These interfaces declare the operations that all concrete products must implement.
