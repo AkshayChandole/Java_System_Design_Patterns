@@ -721,7 +721,7 @@ public class Main {
 
 The Abstract Factory Pattern is a powerful design pattern that promotes flexibility and scalability in the creation of related objects. By abstracting the instantiation process, it allows for easy extension and modification, making the codebase more maintainable and adaptable to change.
 
-<hr?
+<hr>
 
 ## Builder Pattern
 
@@ -739,6 +739,8 @@ The Builder Pattern addresses several key issues:
 4.  **Separation of Concerns**: Decouples the process of object construction from the final representation, adhering to the Single Responsibility Principle.
 
 ### How to Implement It
+
+![builder-uml](https://github.com/user-attachments/assets/6d9a668c-1c30-4fd7-b721-5452a10fc695)
 
 To implement the Builder Pattern, follow these steps:
 
