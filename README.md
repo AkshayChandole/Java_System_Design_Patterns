@@ -721,6 +721,234 @@ public class Main {
 
 The Abstract Factory Pattern is a powerful design pattern that promotes flexibility and scalability in the creation of related objects. By abstracting the instantiation process, it allows for easy extension and modification, making the codebase more maintainable and adaptable to change.
 
+<hr?
+
+## Builder Pattern
+
+### Introduction
+
+The Builder Pattern is a creational design pattern that separates the construction of a complex object from its representation, allowing the same construction process to create different representations. It is particularly useful when an object needs to be constructed in multiple steps or configurations.
+
+### Problem It Solves
+
+The Builder Pattern addresses several key issues:
+
+1.  **Complex Object Construction**: When an object requires numerous steps to construct, the Builder Pattern simplifies the creation process by breaking it down into discrete steps.
+2.  **Readability**: Improves the readability of the code by clearly defining the steps required to create an object.
+3.  **Immutability**: Often used to create immutable objects with multiple configuration options.
+4.  **Separation of Concerns**: Decouples the process of object construction from the final representation, adhering to the Single Responsibility Principle.
+
+### How to Implement It
+
+To implement the Builder Pattern, follow these steps:
+
+1.  **Define a Product Class**: This class represents the complex object to be built.
+2.  **Create a Builder Interface or Abstract Class**: This declares the methods for creating the different parts of the product.
+3.  **Implement Concrete Builder Classes**: These classes build and assemble parts of the product by implementing the builder interface or abstract class.
+4.  **Director Class (Optional)**: This class constructs an object using the builder interface. It is optional but can be useful for managing the construction process.
+5.  **Client Code**: The client code creates a builder object, passes it to the director, and then retrieves the final product.
+
+### Detailed Java Example
+
+Let's consider a real-life example where we need to construct a complex `Car` object with various attributes like engine, seats, GPS, and trip computer.
+
+#### Product Class
+
+```java
+// Car.java
+
+public class Car {
+    private String engine;
+    private int seats;
+    private boolean hasGPS;
+    private boolean hasTripComputer;
+
+    // Getters and setters
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    public void setHasGPS(boolean hasGPS) {
+        this.hasGPS = hasGPS;
+    }
+
+    public void setHasTripComputer(boolean hasTripComputer) {
+        this.hasTripComputer = hasTripComputer;
+    }
+
+    @Override
+    public String toString() {
+        return "Car [engine=" + engine + ", seats=" + seats + ", hasGPS=" + hasGPS + ", hasTripComputer=" + hasTripComputer + "]";
+    }
+}
+```
+
+#### Builder Interface
+
+```java
+// CarBuilder.java
+
+public interface CarBuilder {
+    void reset();
+    void setEngine(String engine);
+    void setSeats(int seats);
+    void setGPS(boolean hasGPS);
+    void setTripComputer(boolean hasTripComputer);
+    Car getResult();
+}
+```
+
+#### Concrete Builder Class
+
+``` java
+// SportsCarBuilder.java
+
+public class SportsCarBuilder implements CarBuilder {
+    private Car car;
+
+    public SportsCarBuilder() {
+        this.car = new Car();
+    }
+
+    @Override
+    public void reset() {
+        this.car = new Car();
+    }
+
+    @Override
+    public void setEngine(String engine) {
+        car.setEngine(engine);
+    }
+
+    @Override
+    public void setSeats(int seats) {
+        car.setSeats(seats);
+    }
+
+    @Override
+    public void setGPS(boolean hasGPS) {
+        car.setHasGPS(hasGPS);
+    }
+
+    @Override
+    public void setTripComputer(boolean hasTripComputer) {
+        car.setHasTripComputer(hasTripComputer);
+    }
+
+    @Override
+    public Car getResult() {
+        return this.car;
+    }
+}
+```
+
+```java 
+// CityCarBuilder.java
+
+public class CityCarBuilder implements CarBuilder {
+    private Car car;
+
+    public CityCarBuilder() {
+        this.car = new Car();
+    }
+
+    @Override
+    public void reset() {
+        this.car = new Car();
+    }
+
+    @Override
+    public void setEngine(String engine) {
+        car.setEngine(engine);
+    }
+
+    @Override
+    public void setSeats(int seats) {
+        car.setSeats(seats);
+    }
+
+    @Override
+    public void setGPS(boolean hasGPS) {
+        car.setHasGPS(hasGPS);
+    }
+
+    @Override
+    public void setTripComputer(boolean hasTripComputer) {
+        car.setHasTripComputer(hasTripComputer);
+    }
+
+    @Override
+    public Car getResult() {
+        return this.car;
+    }
+}
+```
+
+#### Director Class (Optional)
+
+```java
+// CarDirector.java
+
+public class CarDirector {
+    public void constructSportsCar(CarBuilder builder) {
+        builder.reset();
+        builder.setEngine("V8");
+        builder.setSeats(2);
+        builder.setGPS(true);
+        builder.setTripComputer(true);
+    }
+
+    public void constructCityCar(CarBuilder builder) {
+        builder.reset();
+        builder.setEngine("V4");
+        builder.setSeats(4);
+        builder.setGPS(true);
+        builder.setTripComputer(false);
+    }
+}
+```
+
+#### Client Code
+
+```java
+// Main.java
+
+public class Main {
+    public static void main(String[] args) {
+        CarDirector director = new CarDirector();
+
+        CarBuilder sportsCarBuilder = new SportsCarBuilder();
+        director.constructSportsCar(sportsCarBuilder);
+        Car sportsCar = sportsCarBuilder.getResult();
+        System.out.println("Sports Car: " + sportsCar);
+
+        CarBuilder cityCarBuilder = new CityCarBuilder();
+        director.constructCityCar(cityCarBuilder);
+        Car cityCar = cityCarBuilder.getResult();
+        System.out.println("City Car: " + cityCar);
+    }
+}
+```
+
+### Pros
+
+1.  **Flexibility**: The same construction process can create different representations of the product.
+2.  **Readability**: The code for constructing an object is more readable and maintainable.
+3.  **Control**: Provides fine-grained control over the construction process.
+4.  **Immutability**: Facilitates the creation of immutable objects.
+
+### Cons
+
+1.  **Complexity**: Increases the complexity of the code with additional builder and director classes.
+2.  **Overhead**: May add unnecessary overhead if the construction process is simple and doesn't benefit from the Builder Pattern.
+
+The Builder Pattern is a powerful design pattern for constructing complex objects. By decoupling the construction process from the final representation, it provides flexibility, readability, and control, making it easier to manage and extend complex object creation.
+
+
 <hr>
 ## Contributing
 
