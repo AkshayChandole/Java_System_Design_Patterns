@@ -21,7 +21,6 @@ Welcome to the Java System Design Patterns repository! This repository contains 
    - [Abstract Factory Pattern](#abstract-factory-pattern)
    - [Builder Pattern](#builder-pattern)
    - [Prototype Pattern](#prototype-pattern)
-   - [Constructor Pattern](#constructor-pattern)
 
 4. [Structural Patterns](#structural-patterns)
    - [Adapter Pattern](#adapter-pattern)
@@ -950,6 +949,188 @@ public class Main {
 
 The Builder Pattern is a powerful design pattern for constructing complex objects. By decoupling the construction process from the final representation, it provides flexibility, readability, and control, making it easier to manage and extend complex object creation.
 
+<hr>
+
+### Prototype Pattern
+
+#### Introduction
+
+The Prototype Pattern is a creational design pattern used to create objects by copying an existing object, known as the prototype. This pattern is particularly useful when the cost of creating a new instance of a class is more expensive than copying an existing instance. The Prototype Pattern allows for the creation of new objects by cloning an existing object, enabling efficient and flexible object creation.
+
+#### What Problem It Solves
+
+The Prototype Pattern solves several problems, including:
+
+1.  **Costly Object Creation**: When the cost of creating a new object is high (e.g., when it involves resource-intensive operations such as database access or network communication), cloning an existing object can be more efficient.
+2.  **Complex Object Construction**: When an object's creation process involves a complex series of steps, copying an existing object can simplify and expedite the process.
+3.  **Avoiding Subclass Explosion**: When there are many subclasses of a class, each with a different configuration, the Prototype Pattern can reduce the need for numerous subclasses by enabling object creation through cloning.
+
+#### How to Implement It
+![prototype-pattern](https://github.com/user-attachments/assets/fe16b1b3-ccf7-4f0d-b104-9b8c98ea6a51)
+
+
+To implement the Prototype Pattern, follow these steps:
+
+1.  **Create a Prototype Interface**: Define an interface with a method for cloning objects.
+2.  **Implement the Prototype Interface**: Implement the interface in the classes that need to be cloned.
+3.  **Clone Objects**: Use the clone method to create new objects by copying existing ones.
+
+Here is an example in Java:
+
+``` java
+// Prototype Interface
+
+public interface Prototype {
+    Prototype clone();
+}
+```
+
+``` java
+// Concrete Prototype Class
+
+public class Car implements Prototype {
+    private String model;
+    private String color;
+    private int year;
+
+    public Car(String model, String color, int year) {
+        this.model = model;
+        this.color = color;
+        this.year = year;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    @Override
+    public Car clone() {
+        return new Car(this.model, this.color, this.year);
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", year=" + year +
+                '}';
+    }
+}
+```
+
+``` java
+// Client Code
+
+public class Main {
+    public static void main(String[] args) {
+        Car originalCar = new Car("Tesla Model S", "Red", 2022);
+        Car clonedCar = originalCar.clone();
+
+        System.out.println("Original Car: " + originalCar);
+        System.out.println("Cloned Car: " + clonedCar);
+    }
+}
+```
+
+In this example, the `Car` class implements the `Prototype` interface, allowing objects of the `Car` class to be cloned. The `clone` method creates a new `Car` object with the same properties as the original.
+
+#### Pros
+1.  **Efficient Object Creation**: Cloning an existing object is often faster and less resource-intensive than creating a new object from scratch.
+2.  **Simplified Object Construction**: Cloning simplifies the creation of complex objects by copying an existing instance.
+3.  **Reduced Subclass Explosion**: The Prototype Pattern reduces the need for numerous subclasses by allowing objects to be created through cloning.
+
+#### Cons
+
+1.  **Deep vs. Shallow Copying**: Implementing cloning can be complex, especially when dealing with deep copying (copying objects that contain references to other objects).
+2.  **Cloning Complex Objects**: If an object contains complex internal structures or circular references, implementing cloning can be challenging.
+3.  **Copying State**: Ensuring that the copied object's state is correct and independent of the original object can be difficult.
+
+#### Real-Life Java Example
+
+Consider a scenario where you need to create a large number of documents with similar content but slight variations. The Prototype Pattern can be used to clone a template document and make the necessary modifications.
+
+```java
+// Prototype Interface
+
+public interface DocumentPrototype {
+    DocumentPrototype clone();
+}
+```
+
+``` java
+// Concrete Prototype Class
+
+public class Document implements DocumentPrototype {
+    private String title;
+    private String content;
+
+    public Document(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public Document clone() {
+        return new Document(this.title, this.content);
+    }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
+}
+```
+
+```java
+// Client Code
+
+public class Main {
+    public static void main(String[] args) {
+        Document template = new Document("Template Title", "Template Content");
+        Document report = template.clone();
+        report.setTitle("Monthly Report");
+        report.setContent("This is the content of the monthly report.");
+
+        Document invoice = template.clone();
+        invoice.setTitle("Invoice");
+        invoice.setContent("This is the content of the invoice.");
+
+        System.out.println("Template Document: " + template);
+        System.out.println("Report Document: " + report);
+        System.out.println("Invoice Document: " + invoice);
+    }
+}
+```
+
+In this example, the `Document` class implements the `DocumentPrototype` interface, allowing objects of the `Document` class to be cloned. The client code demonstrates how a template document can be cloned and modified to create different types of documents (e.g., reports, invoices) efficiently.
 
 <hr>
 ## Contributing
