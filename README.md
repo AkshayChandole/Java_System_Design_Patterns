@@ -951,13 +951,13 @@ The Builder Pattern is a powerful design pattern for constructing complex object
 
 <hr>
 
-### Prototype Pattern
+## Prototype Pattern
 
-#### Introduction
+### Introduction
 
 The Prototype Pattern is a creational design pattern used to create objects by copying an existing object, known as the prototype. This pattern is particularly useful when the cost of creating a new instance of a class is more expensive than copying an existing instance. The Prototype Pattern allows for the creation of new objects by cloning an existing object, enabling efficient and flexible object creation.
 
-#### What Problem It Solves
+### What Problem It Solves
 
 The Prototype Pattern solves several problems, including:
 
@@ -965,7 +965,7 @@ The Prototype Pattern solves several problems, including:
 2.  **Complex Object Construction**: When an object's creation process involves a complex series of steps, copying an existing object can simplify and expedite the process.
 3.  **Avoiding Subclass Explosion**: When there are many subclasses of a class, each with a different configuration, the Prototype Pattern can reduce the need for numerous subclasses by enabling object creation through cloning.
 
-#### How to Implement It
+### How to Implement It
 ![prototype-pattern](https://github.com/user-attachments/assets/fe16b1b3-ccf7-4f0d-b104-9b8c98ea6a51)
 
 
@@ -1048,13 +1048,13 @@ In this example, the `Car` class implements the `Prototype` interface, allowing 
 2.  **Simplified Object Construction**: Cloning simplifies the creation of complex objects by copying an existing instance.
 3.  **Reduced Subclass Explosion**: The Prototype Pattern reduces the need for numerous subclasses by allowing objects to be created through cloning.
 
-#### Cons
+### Cons
 
 1.  **Deep vs. Shallow Copying**: Implementing cloning can be complex, especially when dealing with deep copying (copying objects that contain references to other objects).
 2.  **Cloning Complex Objects**: If an object contains complex internal structures or circular references, implementing cloning can be challenging.
 3.  **Copying State**: Ensuring that the copied object's state is correct and independent of the original object can be difficult.
 
-#### Real-Life Java Example
+### Real-Life Java Example
 
 Consider a scenario where you need to create a large number of documents with similar content but slight variations. The Prototype Pattern can be used to clone a template document and make the necessary modifications.
 
@@ -1133,6 +1133,8 @@ public class Main {
 In this example, the `Document` class implements the `DocumentPrototype` interface, allowing objects of the `Document` class to be cloned. The client code demonstrates how a template document can be cloned and modified to create different types of documents (e.g., reports, invoices) efficiently.
 
 <hr>
+
+
 ## Contributing
 
 ### How to Contribute
