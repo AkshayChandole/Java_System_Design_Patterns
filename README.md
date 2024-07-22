@@ -147,18 +147,18 @@ Creational patterns play a crucial role in ensuring that a system is well-design
 ---
 
 
-### Singleton Pattern
+## Singleton Pattern
 
 The Singleton Pattern is one of the simplest and most commonly used design patterns in software development. It ensures that a class has only one instance and provides a global point of access to that instance.
 
-#### Introduction
+### Introduction
 
 The Singleton Pattern restricts the instantiation of a class to a single instance. This is useful when exactly one object is needed to coordinate actions across the system. The pattern involves a single class that is responsible for creating an object while making sure that only one object gets created.
 
 ![Singleton Pattern](https://github.com/user-attachments/assets/c847232a-1f1e-4dcd-a20c-c8382f092aeb)
 
 
-#### Problem it Solves
+### Problem it Solves
 
 In certain scenarios, it is important to have exactly one instance of a class. Examples include:
 
@@ -168,7 +168,7 @@ In certain scenarios, it is important to have exactly one instance of a class. E
 
 Without the Singleton Pattern, multiple instances of these classes could be created, leading to inconsistent behavior, resource contention, or performance issues.
 
-#### How to Implement the Singleton Pattern
+### How to Implement the Singleton Pattern
 
 In Java, the Singleton Pattern can be implemented using several approaches. The most common implementations are:
 
@@ -177,7 +177,7 @@ In Java, the Singleton Pattern can be implemented using several approaches. The 
 3.  **Thread-safe Singleton**: Ensures that the instance is created in a thread-safe manner.
 4.  **Bill Pugh Singleton**: Uses an inner static helper class for initialization, which ensures thread-safety and lazy initialization.
 
-##### Example: Eager Initialization
+#### Example: Eager Initialization
 
 ```java
 // EagerSingleton.java 
@@ -202,7 +202,7 @@ public class EagerSingleton {
 }
 ```
 
-##### Example: Lazy Initialization
+#### Example: Lazy Initialization
 
 ```java
 // Singleton.java
@@ -230,7 +230,7 @@ public class Singleton {
 }
 ```
 
-##### Example: Thread-safe Singleton
+#### Example: Thread-safe Singleton
 
 ``` java
 // ThreadSafeSingleton.java
@@ -267,7 +267,7 @@ public class ThreadSafeSingleton {
 }
 ```
 
-##### Example: Bill Pugh Singleton
+#### Example: Bill Pugh Singleton
 
 ```java
 public class BillPughSingleton {
@@ -293,25 +293,25 @@ public class BillPughSingleton {
 }
 ```
 
-#### Pros
+### Pros
 
 1.  **Controlled Access to the Single Instance**: It provides a controlled access point for the unique instance.
 2.  **Reduced Namespace Pollution**: It avoids unnecessary duplication of objects.
 3.  **Flexibility**: Singleton patterns can be extended to support a variable number of instances.
 4.  **Consistent Data**: Ensures that a single instance holds all the necessary state and data, leading to consistent behavior across the application.
 
-#### Cons
+### Cons
 
 1.  **Difficulty in Testing**: Singleton classes can be difficult to unit test because they carry state and often use global access points.
 2.  **Hidden Dependencies**: Singleton can introduce hidden dependencies into a system as it provides a global point of access.
 3.  **Concurrency Issues**: If not implemented correctly, Singleton can lead to issues in a multithreaded environment.
 4.  **Global State**: Singleton can encourage the use of global state, which can make the system harder to understand and maintain.
 
-#### Real-Life Example: Database Connection Manager
+### Real-Life Example: Database Connection Manager
 
 In many applications, managing database connections is critical. The Database Connection Manager should ensure that only one connection pool exists throughout the application to manage database connections efficiently.
 
-##### DatabaseConnectionManager.java
+#### DatabaseConnectionManager.java
 
 ```java
 // DatabaseConnectionManager.java
@@ -348,7 +348,7 @@ public class DatabaseConnectionManager {
 }
 ```
 
-##### Usage Example
+#### Usage Example
 
 ```java
 // Main.class
