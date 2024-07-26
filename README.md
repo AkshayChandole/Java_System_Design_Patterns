@@ -1166,6 +1166,117 @@ Understanding and applying structural patterns is essential for building flexibl
 
 <hr>
 
+## [Adapter Pattern](#adapter-pattern)
+
+### Introduction
+
+The Adapter Pattern is a structural design pattern that allows objects with incompatible interfaces to work together. It acts as a bridge between two incompatible interfaces, converting the interface of a class into another interface that a client expects. This pattern is particularly useful when integrating legacy code with new code, or when you want to use a class that does not match the interface you need.
+
+#### What Problem It Solves
+
+The Adapter Pattern addresses the issue of incompatible interfaces by providing a way to make existing classes work with others without modifying their source code. It allows for flexibility and reusability by enabling objects with different interfaces to collaborate seamlessly.
+
+#### How to Implement It
+![adaptor-pattern](https://github.com/user-attachments/assets/7e7e9a1e-51ca-4ce2-9be2-a21750ad92ab)
+
+1.  **Identify Incompatible Interfaces**: Determine the interfaces that need to work together but are incompatible.
+2.  **Create an Adapter Class**: Implement an adapter class that implements the expected interface and translates the calls from the client to the adaptee.
+3.  **Use the Adapter**: Replace direct calls to the adaptee with calls to the adapter.
+
+#### Pros
+
+1.  **Increased Flexibility**: The Adapter Pattern allows you to use existing classes without modifying them, increasing the flexibility of your code.
+2.  **Promotes Reusability**: By allowing incompatible interfaces to work together, the adapter pattern promotes the reuse of existing components.
+3.  **Decoupling**: It decouples the client code from the adaptee, making the system more maintainable and easier to extend.
+
+#### Cons
+
+1.  **Complexity**: Introducing an adapter adds an extra layer of complexity to the code, which might be unnecessary for simple scenarios.
+2.  **Overhead**: The adapter can introduce a performance overhead, as it translates calls between interfaces.
+
+#### Real-Life Java Example
+
+Consider a scenario where you have an existing `AudioPlayer` class that plays audio files and you want to integrate a new `MediaPlayer` interface that supports both audio and video playback. The `AudioPlayer` class is not compatible with the `MediaPlayer` interface. You can use the Adapter Pattern to make them work together.
+
+```java
+// Target Interface -
+
+// MediaPlayer.java
+interface MediaPlayer {
+    void play(String audioType, String fileName);
+}
+```
+```java
+// Adaptee Class -
+
+// AudioPlayer.java
+class AudioPlayer {
+    public void playAudio(String fileName) {
+        System.out.println("Playing audio file. Name: " + fileName);
+    }
+}
+```
+```java
+// Adapter Class -
+
+// MediaAdapter.java
+class MediaAdapter implements MediaPlayer {
+    private AudioPlayer audioPlayer;
+
+    public MediaAdapter(AudioPlayer audioPlayer) {
+        this.audioPlayer = audioPlayer;
+    }
+
+    @Override
+    public void play(String audioType, String fileName) {
+        if (audioType.equalsIgnoreCase("audio")) {
+            audioPlayer.playAudio(fileName);
+        } else {
+            System.out.println("Invalid media. " + audioType + " format not supported");
+        }
+    }
+}
+```
+```java
+// Client Class -
+
+// AudioPlayerClient.java
+class AudioPlayerClient {
+    private MediaPlayer mediaPlayer;
+
+    public AudioPlayerClient(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+    }
+
+    public void play(String audioType, String fileName) {
+        mediaPlayer.play(audioType, fileName);
+    }
+
+    public static void main(String[] args) {
+        AudioPlayer audioPlayer = new AudioPlayer();
+        MediaAdapter mediaAdapter = new MediaAdapter(audioPlayer);
+        AudioPlayerClient client = new AudioPlayerClient(mediaAdapter);
+
+        client.play("audio", "song.mp3");
+        client.play("video", "movie.mp4");
+    }
+}
+```
+
+In this example:
+
+1.  **MediaPlayer Interface**: Defines the target interface that the client expects.
+2.  **AudioPlayer Class**: Represents the existing class that needs to be adapted.
+3.  **MediaAdapter Class**: Implements the `MediaPlayer` interface and translates calls to the `AudioPlayer` class.
+4.  **AudioPlayerClient Class**: Demonstrates how to use the adapter to play different types of media.
+
+The `MediaAdapter` class makes it possible for the `AudioPlayer` class to be used where a `MediaPlayer` is expected, solving the problem of incompatible interfaces.
+
+Understanding and applying the Adapter Pattern is crucial for integrating different parts of a system and making them work together seamlessly. This pattern enhances the flexibility and reusability of your code, making it a valuable tool in software design.
+
+<hr>
+
+
 ## Contributing
 
 ### How to Contribute
