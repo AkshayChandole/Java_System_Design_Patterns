@@ -1320,6 +1320,7 @@ interface Device {
     void setVolume(int volume);
 }
 ```
+
 ```java
 // Concrete Implementor 1
 
@@ -1344,6 +1345,7 @@ class TV implements Device {
     }
 }
 ```
+
 ```java
 // Concrete Implementor 2
 
@@ -1368,6 +1370,7 @@ class Radio implements Device {
     }
 }
 ```
+
 ```java
 // Abstraction
 
@@ -1384,6 +1387,7 @@ abstract class RemoteControl {
     abstract void setVolume(int volume);
 }
 ```
+
 ```java
 // Refined Abstraction 1
 
@@ -1410,6 +1414,7 @@ class BasicRemoteControl extends RemoteControl {
     }
 }
 ```
+
 ```java
 // Refined Abstraction 2
 
@@ -1441,6 +1446,7 @@ class AdvancedRemoteControl extends RemoteControl {
     }
 }
 ```
+
 ```java
 // Client Code
 
@@ -1476,6 +1482,192 @@ The Bridge Pattern helps in decoupling the remote controls from the devices, all
 <br>
 
 <hr>
+
+## [Decorator Pattern](#decorator-pattern)
+
+### Introduction
+
+The Decorator Pattern is a structural design pattern that allows behavior to be added to individual objects, either statically or dynamically, without affecting the behavior of other objects from the same class. It is typically used to extend the functionalities of classes in a flexible and reusable manner.
+
+### What Problem It Solves
+
+The Decorator Pattern addresses the need for extending the behavior of objects without altering their structure. It provides an alternative to subclassing for extending functionality. This pattern is particularly useful when you want to add responsibilities to objects dynamically and transparently, without affecting other instances of the same class.
+
+### How to Implement It
+![decorator-pattern](https://github.com/user-attachments/assets/535eac2d-0d82-4b77-a33c-2d5abeca998d)
+
+1.  **Component Interface**: Define an interface that both the concrete component and the decorators will implement.
+2.  **Concrete Component**: Create a class that implements the component interface.
+3.  **Decorator Class**: Create an abstract decorator class that implements the component interface and contains a reference to a component object.
+4.  **Concrete Decorators**: Implement concrete decorator classes that extend the decorator class and add new behaviors.
+
+### Pros
+
+1.  **Flexibility**: Allows adding functionalities to objects at runtime, enhancing flexibility.
+2.  **Reusability**: Promotes code reuse by allowing the combination of various decorators to create new behaviors.
+3.  **Single Responsibility Principle**: Each decorator class can focus on a single concern, adhering to the single responsibility principle.
+
+### Cons
+
+1.  **Complexity**: The pattern can introduce complexity due to the creation of many small classes.
+2.  **Maintenance**: Managing and maintaining a large number of decorator classes can be challenging.
+
+### Real-Life Java Example
+
+Consider a scenario where you have a simple `Coffee` interface and you want to add different flavors and ingredients to the coffee dynamically.
+
+```java
+// Component Interface
+
+// Coffee.java
+interface Coffee {
+    String getDescription();
+    double getCost();
+}
+```
+
+```java
+// Concrete Component
+
+// SimpleCoffee.java
+class SimpleCoffee implements Coffee {
+
+    @Override
+    public String getDescription() {
+        return "Simple coffee";
+    }
+
+    @Override
+    public double getCost() {
+        return 5.0;
+    }
+}
+```
+
+```java
+// Decorator Class
+
+// CoffeeDecorator.java
+abstract class CoffeeDecorator implements Coffee {
+    protected Coffee decoratedCoffee;
+
+    public CoffeeDecorator(Coffee coffee) {
+        this.decoratedCoffee = coffee;
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedCoffee.getDescription();
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedCoffee.getCost();
+    }
+}
+```
+
+```java
+// Concrete Decorator
+
+// MilkDecorator.java
+class MilkDecorator extends CoffeeDecorator {
+
+    public MilkDecorator(Coffee coffee) {
+        super(coffee);
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedCoffee.getDescription() + ", milk";
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedCoffee.getCost() + 1.5;
+    }
+}
+```
+
+```java
+// Concrete Decorator
+
+// SugarDecorator.java
+class SugarDecorator extends CoffeeDecorator {
+
+    public SugarDecorator(Coffee coffee) {
+        super(coffee);
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedCoffee.getDescription() + ", sugar";
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedCoffee.getCost() + 0.5;
+    }
+}
+```
+
+```java
+// Concrete Decorators
+
+// VanillaDecorator.java
+class VanillaDecorator extends CoffeeDecorator {
+
+    public VanillaDecorator(Coffee coffee) {
+        super(coffee);
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedCoffee.getDescription() + ", vanilla";
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedCoffee.getCost() + 2.0;
+    }
+}
+```
+
+```java
+// Client Code
+
+// DecoratorPatternDemo.java
+public class DecoratorPatternDemo {
+    public static void main(String[] args) {
+        Coffee coffee = new SimpleCoffee();
+        System.out.println(coffee.getDescription() + " $" + coffee.getCost());
+
+        coffee = new MilkDecorator(coffee);
+        System.out.println(coffee.getDescription() + " $" + coffee.getCost());
+
+        coffee = new SugarDecorator(coffee);
+        System.out.println(coffee.getDescription() + " $" + coffee.getCost());
+
+        coffee = new VanillaDecorator(coffee);
+        System.out.println(coffee.getDescription() + " $" + coffee.getCost());
+    }
+}
+```
+
+In this example:
+
+1.  **Coffee Interface**: Defines the common interface for both the concrete component and decorators.
+2.  **SimpleCoffee Class**: A concrete component that implements the `Coffee` interface.
+3.  **CoffeeDecorator Class**: An abstract class that implements the `Coffee` interface and holds a reference to a `Coffee` object.
+4.  **MilkDecorator, SugarDecorator, VanillaDecorator Classes**: Concrete decorators that extend the `CoffeeDecorator` class and add their specific behavior.
+5.  **DecoratorPatternDemo Class**: Demonstrates the use of the Decorator Pattern by dynamically adding behaviors (milk, sugar, vanilla) to a simple coffee object.
+
+The Decorator Pattern allows you to enhance the functionality of an object dynamically and transparently, making the system more flexible and easier to extend.
+
+<br>
+
+<hr>
+
 
 
 ## Contributing
