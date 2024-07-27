@@ -1306,7 +1306,7 @@ The Bridge Pattern addresses the issue of tight coupling between an abstraction 
 1.  **Complexity**: The pattern can increase the complexity of the code due to the creation of multiple abstraction and implementation classes.
 2.  **Initial Effort**: It may require significant initial effort to set up the bridge structure, especially in systems that are already tightly coupled.
 
-## Real-Life Java Example
+### Real-Life Java Example
 
 Consider a scenario where you have different types of remote controls (e.g., basic remote, advanced remote) and different types of devices (e.g., TV, radio). Using the Bridge Pattern, you can decouple the remote controls from the devices.
 
