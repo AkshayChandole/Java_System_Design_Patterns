@@ -1043,7 +1043,7 @@ public class Main {
 
 In this example, the `Car` class implements the `Prototype` interface, allowing objects of the `Car` class to be cloned. The `clone` method creates a new `Car` object with the same properties as the original.
 
-#### Pros
+### Pros
 1.  **Efficient Object Creation**: Cloning an existing object is often faster and less resource-intensive than creating a new object from scratch.
 2.  **Simplified Object Construction**: Cloning simplifies the creation of complex objects by copying an existing instance.
 3.  **Reduced Subclass Explosion**: The Prototype Pattern reduces the need for numerous subclasses by allowing objects to be created through cloning.
@@ -1172,29 +1172,29 @@ Understanding and applying structural patterns is essential for building flexibl
 
 The Adapter Pattern is a structural design pattern that allows objects with incompatible interfaces to work together. It acts as a bridge between two incompatible interfaces, converting the interface of a class into another interface that a client expects. This pattern is particularly useful when integrating legacy code with new code, or when you want to use a class that does not match the interface you need.
 
-#### What Problem It Solves
+### What Problem It Solves
 
 The Adapter Pattern addresses the issue of incompatible interfaces by providing a way to make existing classes work with others without modifying their source code. It allows for flexibility and reusability by enabling objects with different interfaces to collaborate seamlessly.
 
-#### How to Implement It
+### How to Implement It
 ![adaptor-pattern](https://github.com/user-attachments/assets/7e7e9a1e-51ca-4ce2-9be2-a21750ad92ab)
 
 1.  **Identify Incompatible Interfaces**: Determine the interfaces that need to work together but are incompatible.
 2.  **Create an Adapter Class**: Implement an adapter class that implements the expected interface and translates the calls from the client to the adaptee.
 3.  **Use the Adapter**: Replace direct calls to the adaptee with calls to the adapter.
 
-#### Pros
+### Pros
 
 1.  **Increased Flexibility**: The Adapter Pattern allows you to use existing classes without modifying them, increasing the flexibility of your code.
 2.  **Promotes Reusability**: By allowing incompatible interfaces to work together, the adapter pattern promotes the reuse of existing components.
 3.  **Decoupling**: It decouples the client code from the adaptee, making the system more maintainable and easier to extend.
 
-#### Cons
+### Cons
 
 1.  **Complexity**: Introducing an adapter adds an extra layer of complexity to the code, which might be unnecessary for simple scenarios.
 2.  **Overhead**: The adapter can introduce a performance overhead, as it translates calls between interfaces.
 
-#### Real-Life Java Example
+### Real-Life Java Example
 
 Consider a scenario where you have an existing `AudioPlayer` class that plays audio files and you want to integrate a new `MediaPlayer` interface that supports both audio and video playback. The `AudioPlayer` class is not compatible with the `MediaPlayer` interface. You can use the Adapter Pattern to make them work together.
 
@@ -1808,8 +1808,164 @@ The Facade Pattern effectively simplifies the interaction with a complex system,
 
 <br>
 
+<hr>
+
+## [Flyweight Pattern](#flyweight-pattern)
+
+### Introduction
+
+The Flyweight Pattern is a structural design pattern that focuses on minimizing memory usage by sharing as much data as possible with similar objects. It is particularly useful when dealing with a large number of objects that have some common intrinsic state that can be shared to reduce the overall memory footprint.
+
+### What Problem It Solves
+
+The Flyweight Pattern addresses the problem of inefficient memory usage in systems with many fine-grained objects. Without this pattern, each object would hold its own data, leading to high memory consumption. By sharing the intrinsic state among multiple objects, the Flyweight Pattern reduces redundancy and optimizes resource usage.
+
+### How to Implement It
+![flyweight-pattern](https://github.com/user-attachments/assets/ff849882-9987-43ad-a884-55aaf81588a1)
+
+1.  **Flyweight Interface**: Define an interface that declares methods that will be implemented by concrete flyweight objects.
+2.  **Concrete Flyweight**: Implement the Flyweight interface and store the **intrinsic state** that can be shared.
+3.  **Unshared Concrete Flyweight**: Objects that do not share state.
+4.  **Flyweight Factory**: Create and manage flyweight objects, ensuring that they are shared properly.
+5.  **Client**: Use the flyweight objects, passing the **extrinsic state** as needed.
+
+### Pros
+
+1.  **Reduced Memory Usage**: Significantly reduces memory consumption by sharing common state among objects.
+2.  **Improved Performance**: Enhances performance due to lower memory usage and fewer object instantiations.
+3.  **Flexibility**: Separates intrinsic and extrinsic state, allowing the system to manage state more flexibly.
+
+### Cons
+
+1.  **Increased Complexity**: Adds complexity to the codebase by introducing the need to distinguish between intrinsic and extrinsic states.
+2.  **Maintenance Overhead**: Managing shared objects and ensuring that the Flyweight Factory is properly implemented can be challenging.
+
+### Real-Life Java Example
+
+Consider a scenario where you need to render a large number of trees in a forest. Each tree has a type, color, texture, and coordinates. Instead of creating separate objects for each tree, you can use the Flyweight Pattern to share the common properties (type, color, texture) and maintain unique properties (coordinates) separately.
+
+```java
+// Flyweight Interface
+
+// TreeType.java
+interface TreeType {
+    void draw(int x, int y);
+}
+```
+
+```java
+// Concrete Flyweight
+
+// ConcreteTreeType.java
+class ConcreteTreeType implements TreeType {
+	// Store intrinsic state
+    private String name;
+    private String color;
+    private String texture;
+
+    public ConcreteTreeType(String name, String color, String texture) {
+        this.name = name;
+        this.color = color;
+        this.texture = texture;
+    }
+
+    @Override
+    public void draw(int x, int y) {
+	    // Pass extrinsic state
+        System.out.println("Drawing tree [" + name + ", " + color + ", " + texture + "] at (" + x + ", " + y + ")");
+    }
+}
+```
+
+```java
+// Flyweight Factory
+
+// TreeFactory.java
+class TreeFactory {
+    private static final Map<String, TreeType> treeTypes = new HashMap<>();
+
+    public static TreeType getTreeType(String name, String color, String texture) {
+        String key = name + color + texture;
+        if (!treeTypes.containsKey(key)) {
+            treeTypes.put(key, new ConcreteTreeType(name, color, texture));
+        }
+        return treeTypes.get(key);
+    }
+}
+```
+
+```java
+// Client Class
+
+// Tree.java
+class Tree {
+    private int x;
+    private int y;
+    private TreeType type;
+
+    public Tree(int x, int y, TreeType type) {
+        this.x = x;
+        this.y = y;
+        this.type = type;
+    }
+
+    public void draw() {
+        type.draw(x, y);
+    }
+}
+```
+
+```java
+// Forest Class - Using Flyweight Pattern
+
+// Forest.java
+class Forest {
+    private List<Tree> trees = new ArrayList<>();
+
+    public void plantTree(int x, int y, String name, String color, String texture) {
+        TreeType type = TreeFactory.getTreeType(name, color, texture);
+        Tree tree = new Tree(x, y, type);
+        trees.add(tree);
+    }
+
+    public void draw() {
+        for (Tree tree : trees) {
+            tree.draw();
+        }
+    }
+}
+```
+
+```java
+// Client Code
+public class FlyweightPatternDemo {
+    public static void main(String[] args) {
+        Forest forest = new Forest();
+
+        forest.plantTree(1, 2, "Oak", "Green", "Rough");
+        forest.plantTree(3, 4, "Pine", "Green", "Smooth");
+        forest.plantTree(5, 6, "Oak", "Green", "Rough");
+        forest.plantTree(7, 8, "Pine", "Green", "Smooth");
+
+        forest.draw();
+    }
+}
+```
+
+In this example:
+
+1.  **Flyweight Interface**: The `TreeType` interface declares the `draw` method.
+2.  **Concrete Flyweight**: The `ConcreteTreeType` class implements the `TreeType` interface and stores intrinsic state (name, color, texture).
+3.  **Flyweight Factory**: The `TreeFactory` class creates and manages `TreeType` objects, ensuring they are shared.
+4.  **Client**: The `Tree` class uses `TreeType` objects, passing extrinsic state (coordinates).
+5.  **Forest Class**: The `Forest` class manages a collection of `Tree` objects and demonstrates the use of the Flyweight Pattern.
+
+The Flyweight Pattern efficiently manages memory usage by sharing common properties among a large number of objects, making the system more performant and resource-efficient.
+
+<br>
 
 <hr>
+
 
 
 ## Contributing
