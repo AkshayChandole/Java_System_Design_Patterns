@@ -1668,6 +1668,148 @@ The Decorator Pattern allows you to enhance the functionality of an object dynam
 
 <hr>
 
+## [Facade Pattern](#facade-pattern)
+
+### Introduction
+
+The Facade Pattern is a structural design pattern that provides a simplified interface to a complex subsystem of classes, libraries, or frameworks. It helps to hide the complexities of the system and provides a client with a simpler and more user-friendly interface.
+
+### What Problem It Solves
+
+The Facade Pattern addresses the problem of complexity management in software systems. As systems grow in size and complexity, interacting with a large number of classes directly can become cumbersome and error-prone. The Facade Pattern simplifies this interaction by providing a single interface that shields clients from the intricate details of the subsystem, making the system easier to use and maintain.
+
+### How to Implement It
+![facade-pattern](https://github.com/user-attachments/assets/8bd1a1a4-9572-467d-a00d-19940ffae341)
+
+1.  **Facade Class**: Create a facade class that provides a simplified interface to the subsystem.
+2.  **Subsystem Classes**: The subsystem consists of various classes that perform the actual work. These classes should remain unchanged.
+3.  **Client**: The client interacts with the facade instead of the subsystem classes directly.
+
+### Pros
+
+1.  **Simplifies Usage**: Provides a straightforward interface, making it easier for clients to interact with complex subsystems.
+2.  **Reduces Coupling**: Decouples the client from the subsystem, promoting loose coupling and enhancing modularity.
+3.  **Improves Maintainability**: Changes in the subsystem do not impact the client as long as the facade interface remains consistent.
+
+### Cons
+
+1.  **May Become a God Object**: If the facade grows too large, it can become a god object, violating the single responsibility principle.
+2.  **Performance Overhead**: Adding an extra layer of abstraction can introduce a slight performance overhead.
+
+### Real-Life Java Example
+
+Consider a scenario where you have a home theater system with various components like a DVD player, projector, amplifier, and lights. Using the Facade Pattern, you can provide a simplified interface to control the entire home theater system.
+
+```java
+// Subsystem Class
+
+// DVDPlayer.java
+class DVDPlayer {
+    public void on() { System.out.println("DVD Player on"); }
+    public void play(String movie) { System.out.println("Playing movie: " + movie); }
+    public void stop() { System.out.println("Stopping movie"); }
+    public void off() { System.out.println("DVD Player off"); }
+}
+```
+
+```java
+// Subsystem Class
+
+// Projector.java
+class Projector {
+    public void on() { System.out.println("Projector on"); }
+    public void setInput(String input) { System.out.println("Projector input set to: " + input); }
+    public void wideScreenMode() { System.out.println("Projector in widescreen mode"); }
+    public void off() { System.out.println("Projector off"); }
+}
+```
+
+```java
+// Subsystem Class
+
+// Amplifier.java
+class Amplifier {
+    public void on() { System.out.println("Amplifier on"); }
+    public void setVolume(int level) { System.out.println("Amplifier volume set to: " + level); }
+    public void off() { System.out.println("Amplifier off"); }
+}
+```
+
+```java
+// Subsystem Class
+
+// Projector.java
+class Lights {
+    public void dim(int level) { System.out.println("Lights dimmed to: " + level + "%"); }
+}
+```
+
+```java
+// Facade Class
+class HomeTheaterFacade {
+    private DVDPlayer dvdPlayer;
+    private Projector projector;
+    private Amplifier amplifier;
+    private Lights lights;
+
+    public HomeTheaterFacade(DVDPlayer dvd, Projector projector, Amplifier amp, Lights lights) {
+        this.dvdPlayer = dvd;
+        this.projector = projector;
+        this.amplifier = amp;
+        this.lights = lights;
+    }
+
+    public void watchMovie(String movie) {
+        System.out.println("Get ready to watch a movie...");
+        lights.dim(10);
+        projector.on();
+        projector.setInput("DVD");
+        projector.wideScreenMode();
+        amplifier.on();
+        amplifier.setVolume(5);
+        dvdPlayer.on();
+        dvdPlayer.play(movie);
+    }
+
+    public void endMovie() {
+        System.out.println("Shutting movie theater down...");
+        lights.dim(100);
+        projector.off();
+        amplifier.off();
+        dvdPlayer.stop();
+        dvdPlayer.off();
+    }
+}
+```
+
+```java
+// Client Code
+public class FacadePatternDemo {
+    public static void main(String[] args) {
+        DVDPlayer dvd = new DVDPlayer();
+        Projector projector = new Projector();
+        Amplifier amplifier = new Amplifier();
+        Lights lights = new Lights();
+        HomeTheaterFacade homeTheater = new HomeTheaterFacade(dvd, projector, amplifier, lights);
+
+        homeTheater.watchMovie("Inception");
+        homeTheater.endMovie();
+    }
+}
+```
+
+In this example:
+
+1.  **Subsystem Classes**: The `DVDPlayer`, `Projector`, `Amplifier`, and `Lights` classes form the subsystem, each with its own functionality.
+2.  **Facade Class**: The `HomeTheaterFacade` class provides a simplified interface to control the home theater system. It encapsulates the complexity of the subsystem classes and provides two methods: `watchMovie` and `endMovie`.
+3.  **Client Code**: The client interacts with the `HomeTheaterFacade` instead of the individual subsystem classes, making it easier to control the home theater system with a single interface.
+
+The Facade Pattern effectively simplifies the interaction with a complex system, making it more user-friendly and maintainable.
+
+<br>
+
+
+<hr>
 
 
 ## Contributing
